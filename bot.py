@@ -84,19 +84,28 @@ def set_initial_sell(sellVolumePercent, orderVolume, market, sellValuePercent, c
     result = api.selllimit(market, newSellVolume, newSellValue)
     print result
 
-print "checking value"
-currentValue = orderUtil.initialMarketValue(market, apiKey, apiSecret)
-orderInventory = orderUtil.orders(market, apiKey, apiSecret) #prepare to reset orders
-orderUtil.resetOrders(orderInventory, apiKey, apiSecret)
-orderVolume = api.getbalance(currency)['Balance'] + extCoinBalance
+for i in range(0,10):
+    while True:
+        try:
+            print "checking value"
+            currentValue = orderUtil.initialMarketValue(market, apiKey, apiSecret)
+            orderInventory = orderUtil.orders(market, apiKey, apiSecret) #prepare to reset orders
+            orderUtil.resetOrders(orderInventory, apiKey, apiSecret)
+            orderVolume = api.getbalance(currency)['Balance'] + extCoinBalance
 
-if blockBuy == 'false':
-    print tradeAmount
-    set_initial_buy(buyVolumePercent, orderVolume, market, buyValuePercent, currentValue)
-if blockSell == 'false':
-    print tradeAmount
-    set_initial_sell(sellVolumePercent, orderVolume, market, sellValuePercent, currentValue)
-time.sleep(2)
+            if blockBuy == 'false':
+                print tradeAmount
+                set_initial_buy(buyVolumePercent, orderVolume, market, buyValuePercent, currentValue)
+            if blockSell == 'false':
+                print tradeAmount
+                set_initial_sell(sellVolumePercent, orderVolume, market, sellValuePercent, currentValue)
+            time.sleep(2)
+        except:
+            print "Bittrex threw an error..."
+            continue
+        break
+    break
+
 
 cycle = 0
 

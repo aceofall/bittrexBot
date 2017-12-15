@@ -8,6 +8,10 @@ from modules import bittrex
 from modules import orderUtil
 from modules import buyUtil
 from modules import sellUtil
+import logging
+
+logging.basicConfig(level=logging.INFO, filename="bittrex.log", filemode="a+",
+                        format="%(asctime)-15s %(levelname)-8s %(message)s")
 
 with open("config/botConfig.json", "r") as fin:
     config = json.load(fin)
@@ -28,7 +32,7 @@ tradeAmount = config.get('tradeAmount', 0)
 if (initialSellPrice != 0):
     initialSellPrice = config['initialSellPrice']
     float(initialSellPrice)
-    print initialSellPrice
+    logging.info(initialSellPrice)
 
 if (sellValuePercent == 0):
     blockSell = 'true'
@@ -68,40 +72,40 @@ def set_initial_buy(buyVolumePercent, orderVolume, market, buyValuePercent, curr
     else:
         newBuyVolume = buyUtil.defBuyVolume(orderVolume, buyVolumePercent)
     result = api.buylimit(market, newBuyVolume, newBuyValue)
-    print result
+    logging.info(result)
 
 def set_initial_sell(sellVolumePercent, orderVolume, market, sellValuePercent, currentValue):
     if (initialSellPrice > currentValue):
-        print "Setting user defined sell value"
+        logging.info("Setting user defined sell value")
         newSellValue = initialSellPrice
     else:
-        print "Setting sellValue to market conditions"
+        logging.info("Setting sellValue to market conditions")
         newSellValue = sellUtil.defSellValue(currentValue, sellValuePercent)
     if (sellVolumePercent == 0):
         newSellVolume = tradeAmount
     else:
         newSellVolume = sellUtil.defSellVolume(orderVolume, sellVolumePercent)
     result = api.selllimit(market, newSellVolume, newSellValue)
-    print result
+    logging.info(result)
 
 for i in range(0,10):
     while True:
         try:
-            print "checking value"
+            logging.info("checking value")
             currentValue = orderUtil.initialMarketValue(market, apiKey, apiSecret)
             orderInventory = orderUtil.orders(market, apiKey, apiSecret) #prepare to reset orders
             orderUtil.resetOrders(orderInventory, apiKey, apiSecret)
             orderVolume = api.getbalance(currency)['Balance'] + extCoinBalance
 
             if blockBuy == 'false':
-                print tradeAmount
+                logging.info(tradeAmount)
                 set_initial_buy(buyVolumePercent, orderVolume, market, buyValuePercent, currentValue)
             if blockSell == 'false':
-                print tradeAmount
+                logging.info(tradeAmount)
                 set_initial_sell(sellVolumePercent, orderVolume, market, sellValuePercent, currentValue)
             time.sleep(2)
         except:
-            print "Bittrex threw an error..."
+            logging.info("Bittrex threw an error...")
             continue
         break
     break
@@ -122,17 +126,17 @@ while True:
             if (sellControl == 0):
                 newSellValue = sellUtil.defSellValue(orderValueHistory, sellValuePercent)
                 if (sellVolumePercent == 0):
-                    print "Setting user defined trade amount "
-                    print tradeAmount
+                    logging.info("Setting user defined trade amount ")
+                    logging.info(tradeAmount)
                     newSellVolume = tradeAmount
                 else:
                     newSellVolume = sellUtil.defSellVolume(orderVolume, sellVolumePercent)
-                print "Currency: " + currency
-                print "Sell Value: " + str(newSellValue)
-                print "Sell volume: " + str(newSellVolume)
-                print "Setting sell order..."
+                logging.info("Currency: " + currency)
+                logging.info("Sell Value: " + str(newSellValue))
+                logging.info("Sell volume: " + str(newSellVolume))
+                logging.info("Setting sell order...")
                 result = api.selllimit(market, newSellVolume, newSellValue)
-                print result
+                logging.info(result)
 
 
 
@@ -141,23 +145,23 @@ while True:
             if (buyControl == 0):
                 newBuyValue = buyUtil.defBuyValue(orderValueHistory, buyValuePercent)
                 if (buyVolumePercent == 0):
-                    print "Setting user defined trade amount "
-                    print tradeAmount
+                    logging.info("Setting user defined trade amount ")
+                    logging.info(tradeAmount)
                     newBuyVolume = tradeAmount
                 else:
                     newBuyVolume = buyUtil.defBuyVolume(orderVolume, buyVolumePercent)
-                print "Currency: " + currency
-                print "Buy Value: " + str(newBuyValue)
-                print "Buy Volume: " + str(newBuyVolume)
-                print "Setting buy order..."
+                logging.info("Currency: " + currency)
+                logging.info("Buy Value: " + str(newBuyValue))
+                logging.info("Buy Volume: " + str(newBuyVolume))
+                logging.info("Setting buy order...")
                 result = api.buylimit(market, newBuyVolume, newBuyValue)
-                print result
+                logging.info(result)
 
     except:
-        print "Bittrex probably threw a 503...trying again on the next cycle"
+        logging.info("Bittrex probably threw a 503...trying again on the next cycle")
 
     if cycle == 100:
-        print "Garbage collection"
+        logging.info("Garbage collection")
         gc.collect()
         count = 0
     time.sleep(checkInterval)

@@ -24,3 +24,7 @@ def cancelOrder(orderInventory, orders, apiKey, apiSecret):
         while (ordersToKill >  0):
             api.cancel(buyOrder['OrderUuid'])
             ordersToKill = ordersToKill - 1
+
+def newBuyVolume(balance, volumePercent, buyDifference):
+    return balance * volumePercent * (1/(1 - volumePercent) * 1 + buyDifference)
+

@@ -38,7 +38,7 @@ This is an experimental bot for swing trading against the bittrex exchange. Set 
 
 The percentage values are actual percentages...not decimals. So if you want to trade 3.25% you would input 3.25 in that value. I would also not recommend going below 10 seconds for the checkInterval. Otherwise, it's possible to induce a race condition with bittrex.
 
-##buyDifference explanation
+## buyDifference explanation
 
 In my opinion, the previous configuration model with individual buyVolume and sellVolume parameters ended up being fairly unpredictable. If the price went up, so did the amount the bot would end up buying. If it went down, it ended up selling more. The model was unsustainable over a long period of time and required a LOT of rebasing. 
 

@@ -23,8 +23,8 @@ This is an experimental bot for swing trading against the bittrex exchange. Set 
 | currency | String  | none  |  Yes | Token to be traded (example: STRAT) |
 | sellValuePercent  | Integer/Float  | 4  |  No | Difference in sell price of the previous successful order or market (on startup)  | 
 | buyValuePercent  |  Integer/FLoat |  4 |  No | Difference in buy price of the previous successful order or market (on startup)   | 
-| sellVolumePercent  | Integer/Float  | 0  | No  |  Percent of your tokens to be placed in sell orders | 
-| buyVolumePercent  |  Integer/Float |  0 |  No | Percent of your tokens to be placed in buy orders  | 
+| volumePercent  | Integer/Float  | 4  | No  |  Percent of your tokens to be placed leveraged | 
+| buyDifference  |  Integer/Float |  0 |  No |  Percent adjustment to buy orders. Positive values buy more than sells. Negative values buys less than sell | 
 | extCoinBalance | Integer/Float | 0| No | Off exchange balance|
 | checkInterval | Integer | 30| No | How often the bot checks state|
 | tradeAmount | Integer/Float | 0| No | Manually set token amounts for buy / sell **Overrides percent parameters**|
@@ -33,10 +33,20 @@ This is an experimental bot for swing trading against the bittrex exchange. Set 
 
 *Specal Options*
 
-* Leaving sell value and / or percent out of the config will disable placement of sell orders. Buys will still place and when they trigger, the bracket will still shift.
-* Leaving buy value and / or percent out of the config will disable placement of buy orders. Sells will still place and when they trigger, the bracket will still shift.
+* Leaving sell value percent out of the config will disable placement of sell orders. Buys will still place and when they trigger, the bracket will still shift.
+* Leaving buy value percent out of the config will disable placement of buy orders. Sells will still place and when they trigger, the bracket will still shift.
 
 The percentage values are actual percentages...not decimals. So if you want to trade 3.25% you would input 3.25 in that value. I would also not recommend going below 10 seconds for the checkInterval. Otherwise, it's possible to induce a race condition with bittrex.
+
+##buyDifference explanation
+
+In my opinion, the previous configuration model with individual buyVolume and sellVolume parameters ended up being fairly unpredictable. If the price went up, so did the amount the bot would end up buying. If it went down, it ended up selling more. The model was unsustainable over a long period of time and required a LOT of rebasing. 
+
+To resolve this problem, I've done away with the individual settings for a global setting. In short, setting the 'volumePercent' param with a 'buyDifference' of zero places matching buys / sells. Adjusting the 'buyDifference' changes only the buying behavior. It's been much more predictable and less prone to erroneous buys / sells.
+
+To be transparent, here's the forumla being used to calculate the buy amount:
+
+(balance + externalCoinBalance) * volumePercent * (1/(1 - volumePercent) * 1 + buyDifference)
 
 #### Example file 
 
@@ -48,8 +58,8 @@ The percentage values are actual percentages...not decimals. So if you want to t
   "currency": "WAVES",
   "sellValuePercent": 4,
   "buyValuePercent": 7,
-  "sellVolumePercent": 3,
-  "buyVolumePercent": 3,
+  "volumePercent": 3,
+  "buyDifference": 0,
   "extCoinBalance": 0,
   "checkInterval": 30,
   "initialSellValue": 0
@@ -62,6 +72,13 @@ The bot is designed to trade a single token at a time. It's recommended to run i
 Docker will need to be installed prior to trying to run this. To install Docker, see their installation guide:
 https://docs.docker.com/engine/installation/ 
 The docker image can be found at __jufkes/bittrexBot__
+
+<b><font color="red"> ALERT: BREAKING CHANGE INTRODUCED!! </font></b>
+
+If you're using docker, there are now 2 tagged versions of the bot. 
+
+* legacy: use this tag if you want to continue to use the buyVolumePercent and sellVolumePercent configurations
+* latest: this tag is for the new volume model
 
 To run:
 docker run -d --name <name> -v /path/to/directory_containing_config_file:/opt/bittrexBot/config jufkes/bittrexbot:latest

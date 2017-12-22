@@ -1,3 +1,11 @@
+ALERT: BREAKING CHANGE INTRODUCED!!
+---
+
+If you're using docker, there are now 2 tagged versions of the bot.
+
+__legacy__: use this tag if you want to continue to use the buyVolumePercent and sellVolumePercent configurations
+__latest__: this tag is for the new volume model
+
 Questions feel free to ask
 
 # bittrexBot
@@ -72,13 +80,6 @@ The bot is designed to trade a single token at a time. It's recommended to run i
 Docker will need to be installed prior to trying to run this. To install Docker, see their installation guide:
 https://docs.docker.com/engine/installation/ 
 The docker image can be found at __jufkes/bittrexBot__
-
-<b><font color="red"> ALERT: BREAKING CHANGE INTRODUCED!! </font></b>
-
-If you're using docker, there are now 2 tagged versions of the bot. 
-
-* legacy: use this tag if you want to continue to use the buyVolumePercent and sellVolumePercent configurations
-* latest: this tag is for the new volume model
 
 To run:
 docker run -d --name <name> -v /path/to/directory_containing_config_file:/opt/bittrexBot/config jufkes/bittrexbot:latest

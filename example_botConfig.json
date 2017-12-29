@@ -5,8 +5,8 @@
   "currency": "XRP",
   "sellValuePercent": 4,
   "buyValuePercent": 7,
-  "sellVolumePercent": 3,
-  "buyVolumePercent": 3,
+  "volumePercent": 3,
+  "buyDifference": 3,
   "extCoinBalance": 0,
   "checkInterval": 30
 }

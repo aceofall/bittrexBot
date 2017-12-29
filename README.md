@@ -1,4 +1,16 @@
+ALERT: BREAKING CHANGE INTRODUCED!!
+---
+
+If you're using docker, there are now 2 tagged versions of the bot.
+
+__legacy__: use this tag if you want to continue to use the buyVolumePercent and sellVolumePercent configurations
+__latest__: this tag is for the new volume model
+
 Questions feel free to ask
+
+Here is a blog entry that acts as a walkthrough for setting up the bot:
+
+https://www.thecryptoaddiction.com/technical/2017/12/25/gfz3kshscew7mrfgywzjjro9h3nczc
 
 # bittrexBot
 This is an experimental bot for swing trading against the bittrex exchange. Set an upper and lower percentage that will place buy / sell orders. When an order triggers, the bracket will shift basing off the last order.
@@ -38,7 +50,7 @@ This is an experimental bot for swing trading against the bittrex exchange. Set 
 
 The percentage values are actual percentages...not decimals. So if you want to trade 3.25% you would input 3.25 in that value. I would also not recommend going below 10 seconds for the checkInterval. Otherwise, it's possible to induce a race condition with bittrex.
 
-##buyDifference explanation
+## buyDifference explanation
 
 In my opinion, the previous configuration model with individual buyVolume and sellVolume parameters ended up being fairly unpredictable. If the price went up, so did the amount the bot would end up buying. If it went down, it ended up selling more. The model was unsustainable over a long period of time and required a LOT of rebasing. 
 
@@ -92,6 +104,9 @@ docker run -d --name waves -v /opt/botdefs/waves:/opt/bittrexBot/config --restar
 Bots run without your intervention. It is recommended that you have a means to track your trades ergo, track the trades the bot is making for you. That is the same for this bot as well as any other bots you may try.
 
 I track my trades using [CryptoNotify](http://cryptonotify.com). This tool can be setup to email executed trades or, as I prefer, send a message to a Slack channel.
+
+## Donations
+If you'd like to donate a little BTC as a thank you, you can do so here: 19h1hgS2iSBReUaEo8oVkxkQdUDGwSuKCH
 
 ## License
 Code released under the [MIT License](https://github.com/jufkes/bittrexBot/master/LICENSE).

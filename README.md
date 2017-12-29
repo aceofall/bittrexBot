@@ -8,6 +8,10 @@ __latest__: this tag is for the new volume model
 
 Questions feel free to ask
 
+Here is a blog entry that acts as a walkthrough for setting up the bot:
+
+https://www.thecryptoaddiction.com/technical/2017/12/25/gfz3kshscew7mrfgywzjjro9h3nczc
+
 # bittrexBot
 This is an experimental bot for swing trading against the bittrex exchange. Set an upper and lower percentage that will place buy / sell orders. When an order triggers, the bracket will shift basing off the last order.
 
@@ -93,6 +97,9 @@ docker run -d --name waves -v /opt/botdefs/waves:/opt/bittrexBot/config --restar
 Bots run without your intervention. It is recommended that you have a means to track your trades ergo, track the trades the bot is making for you. That is the same for this bot as well as any other bots you may try.
 
 I track my trades using [CryptoNotify](http://cryptonotify.com). This tool can be setup to email executed trades or, as I prefer, send a message to a Slack channel.
+
+## Donations
+If you'd like to donate a little BTC as a thank you, you can do so here: 19h1hgS2iSBReUaEo8oVkxkQdUDGwSuKCH
 
 ## License
 Code released under the [MIT License](https://github.com/jufkes/bittrexBot/master/LICENSE).

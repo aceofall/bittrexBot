@@ -112,7 +112,6 @@ BTC: 19h1hgS2iSBReUaEo8oVkxkQdUDGwSuKCH
 
 ETH: 0x38d413ee72a8705b2e5981c924048f299ed1d15e
 
-BCC: I mean...nobody really wants BCC
 
 ## License
 Code released under the [MIT License](https://github.com/jufkes/bittrexBot/master/LICENSE).

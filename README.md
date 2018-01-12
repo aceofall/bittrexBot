@@ -109,7 +109,9 @@ I track my trades using [CryptoNotify](http://cryptonotify.com). This tool can b
 If you'd like to donate as a thank you, you can do so here: 
 
 BTC: 19h1hgS2iSBReUaEo8oVkxkQdUDGwSuKCH
+
 ETH: 0x38d413ee72a8705b2e5981c924048f299ed1d15e
+
 BCC: lol...no
 
 ## License

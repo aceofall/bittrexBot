@@ -106,7 +106,11 @@ Bots run without your intervention. It is recommended that you have a means to t
 I track my trades using [CryptoNotify](http://cryptonotify.com). This tool can be setup to email executed trades or, as I prefer, send a message to a Slack channel.
 
 ## Donations
-If you'd like to donate a little BTC as a thank you, you can do so here: 19h1hgS2iSBReUaEo8oVkxkQdUDGwSuKCH
+If you'd like to donate as a thank you, you can do so here: 
+
+BTC: 19h1hgS2iSBReUaEo8oVkxkQdUDGwSuKCH
+ETH: 0x38d413ee72a8705b2e5981c924048f299ed1d15e
+BCC: lol...no
 
 ## License
 Code released under the [MIT License](https://github.com/jufkes/bittrexBot/master/LICENSE).

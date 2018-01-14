@@ -10,7 +10,7 @@ from modules import buyUtil
 from modules import sellUtil
 import logging
 
-logging.basicConfig(level=logging.INFO, filename="bittrex.log", filemode="a+",
+logging.basicConfig(level=logging.INFO, filename="config/bittrex.log", filemode="a+",
                         format="%(asctime)-15s %(levelname)-8s %(message)s")
 
 with open("config/botConfig.json", "r") as fin:
